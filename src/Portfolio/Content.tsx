@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import Contact from './Contact';
+import SkillsSection from './Skills';
 import profileImage from '../assets/ian.png';
 // Brand logos
 import figmaLogo from '../assets/figma.png';
@@ -16,6 +18,11 @@ import teamPlayerIcon from '../assets/team_player.png';
 // Project images
 import anxietyAppImage from '../assets/anxiety-application.png';
 import spcRfidImage from '../assets/spc-rfid.png';
+import attendEaseImage from '../assets/attendease.png';
+import medScanImage from '../assets/medscan.png';
+import scannifyImage from '../assets/scannify.png';
+import happytoesImage from '../assets/happytoes.png';
+import winterImage from '../assets/winter.png';
 import osasMainImage from '../assets/OSAS/OSAS.png';
 import osasScreenshot1 from '../assets/OSAS/Screenshot 2026-01-17 151624.png';
 import osasScreenshot2 from '../assets/OSAS/Screenshot 2026-01-17 151634.png';
@@ -29,15 +36,6 @@ import osasScreenshot9 from '../assets/OSAS/Screenshot 2026-01-17 151752.png';
 
 const PLACEHOLDER_AVATAR = profileImage;
 
-// Skill type definition
-interface Skill {
-    name: string;
-    icon?: string;
-    iconImg?: string;
-    category: string;
-    level: number;
-}
-
 interface Project {
     id: number;
     title: string;
@@ -50,37 +48,6 @@ interface Project {
     screenshots?: string[];
 }
 
-// Expanded skills with brand logos
-const skills: Skill[] = [
-    // Frontend
-    { name: 'React', icon: '⚛️', category: 'frontend', level: 90 },
-    { name: 'TypeScript', icon: '📘', category: 'frontend', level: 85 },
-    { name: 'Next.js', icon: '▲', category: 'frontend', level: 88 },
-    { name: 'Tailwind CSS', icon: '🎨', category: 'frontend', level: 95 },
-    { name: 'JavaScript', icon: '💛', category: 'frontend', level: 92 },
-    { name: 'HTML/CSS', icon: '🌐', category: 'frontend', level: 95 },
-    // Backend
-    { name: 'Node.js', icon: '💚', category: 'backend', level: 85 },
-    { name: 'Express', icon: '🚀', category: 'backend', level: 80 },
-    { name: 'PostgreSQL', icon: '🐘', category: 'backend', level: 82 },
-    { name: 'MongoDB', icon: '🍃', category: 'backend', level: 78 },
-    { name: 'Supabase', iconImg: supabaseLogo, category: 'backend', level: 85 },
-    { name: 'MySQL', icon: '🐬', category: 'backend', level: 80 },
-    { name: 'PHP', icon: '🐘', category: 'backend', level: 75 },
-    // Tools & AI
-    { name: 'VS Code', iconImg: vscodeLogo, category: 'tools', level: 95 },
-    { name: 'Git', icon: '📦', category: 'tools', level: 90 },
-    { name: 'GitHub', icon: '🐙', category: 'tools', level: 90 },
-    { name: 'Figma', iconImg: figmaLogo, category: 'tools', level: 85 },
-    { name: 'Docker', icon: '🐳', category: 'tools', level: 75 },
-    { name: 'XAMPP', iconImg: xamppLogo, category: 'tools', level: 80 },
-    { name: 'Postman', icon: '📮', category: 'tools', level: 85 },
-    { name: 'ChatGPT', iconImg: chatgptLogo, category: 'tools', level: 90 },
-    { name: 'Claude AI', iconImg: claudeLogo, category: 'tools', level: 88 },
-    { name: 'Vercel', icon: '▲', category: 'tools', level: 85 },
-    { name: 'Netlify', icon: '🌍', category: 'tools', level: 80 },
-    { name: 'npm', icon: '📦', category: 'tools', level: 90 },
-];
 
 // Orbiting icon component - icons circle slowly around the avatar (fully responsive)
 const OrbitingIcon = ({
@@ -88,7 +55,7 @@ const OrbitingIcon = ({
     duration,
     offsetPercent = 0
 }: {
-    children: React.ReactNode,
+    children: ReactNode,
     duration: number,
     offsetPercent?: number
 }) => {
@@ -156,30 +123,58 @@ const projects: Project[] = [
     },
     {
         id: 4,
-        title: 'Analytics Dashboard',
-        description: 'Real-time data visualization with interactive charts.',
-        image:
-            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
-        tags: ['Vue.js', 'D3.js', 'MongoDB'],
+        title: 'Scannify',
+        description:
+            'A QR code scanning application that can read even blurry or worn-out codes, show the destination link, keep a history of scans, and let users revisit links easily.',
+        image: scannifyImage,
+        tags: ['JSX', 'Node.js', 'Supabase', 'TailwindCSS'],
         category: 'fullstack',
+        liveDemo: 'https://qrcodescannify.netlify.app/login',
+        github: 'https://github.com/mcjovicduarte/QR-code-scanner-app',
     },
     {
         id: 5,
-        title: 'REST API Service',
-        description: 'Scalable microservices with authentication.',
-        image:
-            'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
-        tags: ['Node.js', 'Express', 'Docker'],
-        category: 'backend',
+        title: 'Happytoes',
+        description:
+            'A responsive e-commerce application for socks with Stripe-powered payments, add-to-cart, and favorites features.',
+        image: happytoesImage,
+        tags: ['JSX', 'Supabase', 'Node.js', 'TailwindCSS'],
+        category: 'fullstack',
+        liveDemo: 'https://happytoes.vercel.app/',
+        github: 'https://github.com/mcjovicduarte/happytoes',
     },
     {
         id: 6,
-        title: 'Portfolio Template',
-        description: 'Modern, responsive portfolio with animations.',
-        image:
-            'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop',
-        tags: ['React', 'Framer Motion'],
+        title: 'Winter',
+        description:
+            'A responsive e-commerce application for jackets with Stripe-powered payments, add-to-cart, and favorites features.',
+        image: winterImage,
+        tags: ['JSX', 'Supabase', 'Node.js', 'TailwindCSS'],
+        category: 'fullstack',
+        liveDemo: 'https://winter-app-chi.vercel.app/',
+        github: 'https://github.com/AndieCris/winter-app',
+    },
+    {
+        id: 7,
+        title: 'AttendEase',
+        description:
+            'High-fidelity Figma prototype for an attendance system UI, showcasing clean layouts, component structure, and interaction flows.',
+        image: attendEaseImage,
+        tags: ['Figma'],
         category: 'frontend',
+        liveDemo:
+            'https://www.figma.com/proto/RERytDlGWPNU9bvQ0rcpt4/Attendance-System?node-id=2-8&t=T5B1c0RsHwWqxeKJ-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A8&show-proto-sidebar=1',
+    },
+    {
+        id: 8,
+        title: 'MedScan',
+        description:
+            'High-fidelity Figma prototype for a medical scanning application, focused on clean UI and clear patient information flows.',
+        image: medScanImage,
+        tags: ['Figma'],
+        category: 'frontend',
+        liveDemo:
+            'https://www.figma.com/proto/S69640O0vjuZ9BzXvaIwcY/MEDSCAN-APPLICATION?node-id=1-2&t=xgIiOBjPpWdbekcY-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=390%3A3989&show-proto-sidebar=1',
     },
 ];
 
@@ -195,7 +190,6 @@ const Content = () => {
     const [currentScreenshotIndex, setCurrentScreenshotIndex] = useState(0);
     const [zoomedScreenshot, setZoomedScreenshot] = useState<string | null>(null);
     const filteredProjects = activeFilter === 'all' ? projects : projects.filter(p => p.category === activeFilter);
-    const filteredSkills = activeFilter === 'all' ? skills : skills.filter(s => s.category === activeFilter);
 
     // Color coding for technology tags
     const getTagColor = (tag: string): string => {
@@ -265,20 +259,6 @@ const Content = () => {
             document.body.style.overflow = 'unset';
         };
     }, [selectedProject]);
-
-    // Render skill icon (either emoji or image)
-    const renderSkillIcon = (skill: Skill) => {
-        if (skill.iconImg) {
-            return (
-                <img
-                    src={skill.iconImg}
-                    alt={skill.name}
-                    className="w-8 h-8 object-contain"
-                />
-            );
-        }
-        return <span className="text-3xl">{skill.icon}</span>;
-    };
 
     return (
         <main className="bg-[#0a0a0b] text-zinc-50">
@@ -423,29 +403,11 @@ const Content = () => {
             {/* Skills Section */}
             <section id="skills" className="py-24 sm:py-32 px-4">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16 animate-on-scroll">
-                        <span className="text-rose-400 font-medium tracking-widest uppercase text-sm">My Skills</span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4">Technologies I <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-400">Work With</span></h2>
-                        <p className="text-zinc-400 mt-4 max-w-2xl mx-auto">From development tools to AI assistants, here's my complete tech stack</p>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-2 mb-12">
-                        {['all', 'frontend', 'backend', 'tools'].map((cat) => (
-                            <button key={cat} onClick={() => setActiveFilter(cat)} className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${activeFilter === cat ? 'bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-lg shadow-rose-500/25' : 'bg-zinc-800/50 text-zinc-400 hover:text-zinc-100'}`}>
-                                {cat === 'all' ? 'All' : cat === 'frontend' ? 'Frontend' : cat === 'backend' ? 'Backend & DB' : 'Tools & AI'}
-                            </button>
-                        ))}
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                        {filteredSkills.map((skill, index) => (
-                            <div key={skill.name} className={`animate-on-scroll group p-5 bg-zinc-900/50 rounded-2xl border border-zinc-800 hover:border-rose-500/50 transition-all hover:shadow-xl hover:shadow-rose-500/10 hover:-translate-y-1 stagger-${(index % 6) + 1}`}>
-                                <div className="h-10 mb-3 flex items-center justify-center transform group-hover:scale-110 transition-transform">
-                                    {renderSkillIcon(skill)}
-                                </div>
-                                <h4 className="font-medium text-zinc-100 text-sm mb-2 text-center">{skill.name}</h4>
-                                <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-rose-500 to-red-500 rounded-full transition-all duration-500" style={{ width: `${skill.level}%` }}></div></div>
-                            </div>
-                        ))}
-                    </div>
+                    <SkillsSection
+                        projects={projects}
+                        activeFilter={activeFilter}
+                        setActiveFilter={setActiveFilter}
+                    />
                 </div>
             </section>
 
@@ -471,8 +433,12 @@ const Content = () => {
                                 onClick={() => setSelectedProject(project)}
                                 className={`animate-on-scroll group bg-zinc-900/50 rounded-2xl border border-zinc-800 overflow-hidden hover:border-rose-500/50 transition-all hover:shadow-2xl hover:shadow-rose-500/10 cursor-pointer stagger-${(index % 3) + 1}`}
                             >
-                                <div className="relative h-48 overflow-hidden">
-                                    <img src={project.image} alt={project.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                                <div className="relative h-56 sm:h-64 overflow-hidden bg-black/60">
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                                    />
                                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent"></div>
                                     <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                                         <span className="text-xs text-zinc-400 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full">Click to view</span>
@@ -536,7 +502,7 @@ const Content = () => {
 
                     {/* Modal Content */}
                     <div
-                        className="relative bg-zinc-900 rounded-3xl border border-zinc-800 max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
+                        className="relative bg-zinc-900 rounded-3xl border border-zinc-800 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl thin-scrollbar"
                         style={{ animation: 'modalSlideIn 0.3s ease-out' }}
                         onClick={(e) => e.stopPropagation()}
                     >
@@ -551,17 +517,17 @@ const Content = () => {
                         </button>
 
                         {/* Project Image - Full Width */}
-                        <div className="relative h-72 sm:h-80 md:h-96 overflow-hidden">
+                        <div className="relative h-72 sm:h-80 md:h-[26rem] overflow-hidden bg-black">
                             <img
                                 src={selectedProject.image}
                                 alt={selectedProject.title}
-                                className="w-full h-full object-cover object-top"
+                                className="w-full h-full object-contain"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/20 to-transparent"></div>
                         </div>
 
-                        {/* Project Details - Scrollable */}
-                        <div className="p-6 sm:p-8 -mt-20 relative max-h-[50vh] overflow-y-auto">
+                        {/* Project Details */}
+                        <div className="p-6 sm:p-8 -mt-20 relative">
                             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
                                 {selectedProject.title}
                             </h2>

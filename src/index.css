@@ -102,6 +102,15 @@ button {
   scrollbar-width: none;
 }
 
+/* Thin scrollbar utility (for specific scrollable areas like modals) */
+.thin-scrollbar {
+  scrollbar-width: thin;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
 /* Gradient text animation */
 @keyframes gradient-shift {
 
