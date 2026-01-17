@@ -16,6 +16,16 @@ import teamPlayerIcon from '../assets/team_player.png';
 // Project images
 import anxietyAppImage from '../assets/anxiety-application.png';
 import spcRfidImage from '../assets/spc-rfid.png';
+import osasMainImage from '../assets/OSAS/OSAS.png';
+import osasScreenshot1 from '../assets/OSAS/Screenshot 2026-01-17 151624.png';
+import osasScreenshot2 from '../assets/OSAS/Screenshot 2026-01-17 151634.png';
+import osasScreenshot3 from '../assets/OSAS/Screenshot 2026-01-17 151647.png';
+import osasScreenshot4 from '../assets/OSAS/Screenshot 2026-01-17 151709.png';
+import osasScreenshot5 from '../assets/OSAS/Screenshot 2026-01-17 151718.png';
+import osasScreenshot6 from '../assets/OSAS/Screenshot 2026-01-17 151725.png';
+import osasScreenshot7 from '../assets/OSAS/Screenshot 2026-01-17 151733.png';
+import osasScreenshot8 from '../assets/OSAS/Screenshot 2026-01-17 151745.png';
+import osasScreenshot9 from '../assets/OSAS/Screenshot 2026-01-17 151752.png';
 
 const PLACEHOLDER_AVATAR = profileImage;
 
@@ -26,6 +36,18 @@ interface Skill {
     iconImg?: string;
     category: string;
     level: number;
+}
+
+interface Project {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    tags: string[];
+    category: string;
+    liveDemo?: string;
+    github?: string;
+    screenshots?: string[];
 }
 
 // Expanded skills with brand logos
@@ -88,13 +110,77 @@ const OrbitingIcon = ({
     );
 };
 
-const projects = [
-    { id: 1, title: 'Anxiety Application', description: 'A student mental health platform featuring CBT modules, anxiety videos, gamification, breathing exercises, appointments, todo lists, mood tracking, and streak pet features.', image: anxietyAppImage, tags: ['TypeScript', 'Node.js', 'Supabase'], category: 'fullstack', liveDemo: 'https://anxiety-application.netlify.app/', github: 'https://github.com/yansanity1998/anxiety-application' },
-    { id: 2, title: 'SPC-RFID Attendance & Payroll', description: 'A comprehensive RFID-based attendance and payroll management system for SPC workers. This system monitors employee attendance through RFID technology and manages payroll calculations efficiently.', image: spcRfidImage, tags: ['TypeScript', 'Node.js', 'Supabase'], category: 'fullstack', liveDemo: 'https://rfid-payroll.netlify.app/', github: 'https://github.com/yansanity1998/spc-rfid_payroll' },
-    { id: 3, title: 'AI Chat Interface', description: 'Modern chat application powered by OpenAI.', image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop', tags: ['React', 'OpenAI API', 'TailwindCSS'], category: 'frontend', liveDemo: '#', github: '#' },
-    { id: 4, title: 'Analytics Dashboard', description: 'Real-time data visualization with interactive charts.', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop', tags: ['Vue.js', 'D3.js', 'MongoDB'], category: 'fullstack', liveDemo: '#', github: '#' },
-    { id: 5, title: 'REST API Service', description: 'Scalable microservices with authentication.', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop', tags: ['Node.js', 'Express', 'Docker'], category: 'backend', liveDemo: '#', github: '#' },
-    { id: 6, title: 'Portfolio Template', description: 'Modern, responsive portfolio with animations.', image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop', tags: ['React', 'Framer Motion'], category: 'frontend', liveDemo: '#', github: '#' },
+const projects: Project[] = [
+    {
+        id: 1,
+        title: 'Anxiety Application',
+        description:
+            'A student mental health platform featuring CBT modules, anxiety videos, gamification, breathing exercises, appointments, todo lists, mood tracking, and streak pet features.',
+        image: anxietyAppImage,
+        tags: ['TypeScript', 'Node.js', 'Supabase', 'TailwindCSS'],
+        category: 'fullstack',
+        liveDemo: 'https://anxiety-application.netlify.app/',
+        github: 'https://github.com/yansanity1998/anxiety-application',
+    },
+    {
+        id: 2,
+        title: 'SPC-RFID Attendance & Payroll',
+        description:
+            'A comprehensive RFID-based attendance and payroll management system for SPC workers. This system monitors employee attendance through RFID technology and manages payroll calculations efficiently.',
+        image: spcRfidImage,
+        tags: ['TypeScript', 'Node.js', 'Supabase', 'TailwindCSS'],
+        category: 'fullstack',
+        liveDemo: 'https://rfid-payroll.netlify.app/',
+        github: 'https://github.com/yansanity1998/spc-rfid_payroll',
+    },
+    {
+        id: 3,
+        title: 'DSA-OSAS Student & Sports Management System',
+        description:
+            'A merged student and sports management platform for the Office of Student Affairs & Services (OSAS). It combines a sports management system and a cabinet management system to track athletes, games, and student records in one admin panel.',
+        image: osasMainImage,
+        tags: ['PHP', 'JavaScript', 'XAMPP', 'TailwindCSS'],
+        category: 'fullstack',
+        github: 'https://github.com/markjordanugtongspc/OSAS-SIS',
+        screenshots: [
+            osasScreenshot1,
+            osasScreenshot2,
+            osasScreenshot3,
+            osasScreenshot4,
+            osasScreenshot5,
+            osasScreenshot6,
+            osasScreenshot7,
+            osasScreenshot8,
+            osasScreenshot9,
+        ],
+    },
+    {
+        id: 4,
+        title: 'Analytics Dashboard',
+        description: 'Real-time data visualization with interactive charts.',
+        image:
+            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+        tags: ['Vue.js', 'D3.js', 'MongoDB'],
+        category: 'fullstack',
+    },
+    {
+        id: 5,
+        title: 'REST API Service',
+        description: 'Scalable microservices with authentication.',
+        image:
+            'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
+        tags: ['Node.js', 'Express', 'Docker'],
+        category: 'backend',
+    },
+    {
+        id: 6,
+        title: 'Portfolio Template',
+        description: 'Modern, responsive portfolio with animations.',
+        image:
+            'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop',
+        tags: ['React', 'Framer Motion'],
+        category: 'frontend',
+    },
 ];
 
 const experiences = [
@@ -105,7 +191,9 @@ const experiences = [
 
 const Content = () => {
     const [activeFilter, setActiveFilter] = useState('all');
-    const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [currentScreenshotIndex, setCurrentScreenshotIndex] = useState(0);
+    const [zoomedScreenshot, setZoomedScreenshot] = useState<string | null>(null);
     const filteredProjects = activeFilter === 'all' ? projects : projects.filter(p => p.category === activeFilter);
     const filteredSkills = activeFilter === 'all' ? skills : skills.filter(s => s.category === activeFilter);
 
@@ -128,6 +216,8 @@ const Content = () => {
             'D3.js': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
             'OpenAI API': 'bg-purple-500/20 text-purple-400 border-purple-500/30',
             'Framer Motion': 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+            'PHP': 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
+            'XAMPP': 'bg-orange-500/20 text-orange-300 border-orange-500/30',
         };
         return colors[tag] || 'bg-rose-500/20 text-rose-400 border-rose-500/30';
     };
@@ -167,6 +257,7 @@ const Content = () => {
     useEffect(() => {
         if (selectedProject) {
             document.body.style.overflow = 'hidden';
+            setCurrentScreenshotIndex(0);
         } else {
             document.body.style.overflow = 'unset';
         }
@@ -493,38 +584,175 @@ const Content = () => {
                                 <p className="text-zinc-400 leading-relaxed text-base">
                                     {selectedProject.description}
                                 </p>
+                                {selectedProject.title === 'DSA-OSAS Student & Sports Management System' && (
+                                    <p className="text-zinc-400 leading-relaxed text-base mt-3">
+                                        This project is built with PHP, JavaScript, and XAMPP and merges two systems: a
+                                        complete sports management system (athletes, events, game results) and a cabinet
+                                        management system for student and organization records under OSAS.
+                                    </p>
+                                )}
                             </div>
 
+                            {/* Feature Screenshots Carousel */}
+                            {selectedProject.screenshots && selectedProject.screenshots.length > 0 && (
+                                <div className="mb-8">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <h3 className="text-lg font-semibold text-zinc-100">Feature Screens</h3>
+                                        <span className="text-xs text-zinc-500">
+                                            {currentScreenshotIndex + 1} / {selectedProject.screenshots.length}
+                                        </span>
+                                    </div>
+                                    <div className="relative rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900/60">
+                                        <button
+                                            type="button"
+                                            className="w-full h-64 group cursor-zoom-in"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                const current = selectedProject.screenshots
+                                                    ? selectedProject.screenshots[currentScreenshotIndex]
+                                                    : null;
+                                                if (current) {
+                                                    setZoomedScreenshot(current);
+                                                }
+                                            }}
+                                        >
+                                            <img
+                                                src={selectedProject.screenshots[currentScreenshotIndex]}
+                                                alt={`${selectedProject.title} feature ${currentScreenshotIndex + 1}`}
+                                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                                            />
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="absolute inset-y-0 left-0 flex items-center px-3 text-sm bg-black/40 hover:bg-black/60 text-zinc-100"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setCurrentScreenshotIndex((prev) =>
+                                                    selectedProject.screenshots
+                                                        ? (prev - 1 + selectedProject.screenshots.length) %
+                                                          selectedProject.screenshots.length
+                                                        : prev,
+                                                );
+                                            }}
+                                        >
+                                            ‹
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="absolute inset-y-0 right-0 flex items-center px-3 text-sm bg-black/40 hover:bg-black/60 text-zinc-100"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setCurrentScreenshotIndex((prev) =>
+                                                    selectedProject.screenshots
+                                                        ? (prev + 1) % selectedProject.screenshots.length
+                                                        : prev,
+                                                );
+                                            }}
+                                        >
+                                            ›
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
                             {/* Action Buttons */}
-                            <div className="flex items-center gap-4 pt-4 border-t border-zinc-800">
+                            <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-zinc-800">
                                 <span className="px-4 py-2 bg-rose-500/20 text-rose-400 rounded-full text-sm font-medium border border-rose-500/30">
                                     {selectedProject.category.charAt(0).toUpperCase() + selectedProject.category.slice(1)}
                                 </span>
-                                <a
-                                    href={selectedProject.github}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full text-sm font-medium transition-colors"
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                                    </svg>
-                                    View on GitHub
-                                </a>
-                                <a
-                                    href={selectedProject.liveDemo}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white rounded-full text-sm font-medium transition-colors"
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                    </svg>
-                                    Live Demo
-                                </a>
+                                {selectedProject.github && (
+                                    <a
+                                        href={selectedProject.github}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full text-sm font-medium transition-colors"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                        </svg>
+                                        View on GitHub
+                                    </a>
+                                )}
+                                {selectedProject.liveDemo && selectedProject.liveDemo !== '#' && (
+                                    <a
+                                        href={selectedProject.liveDemo}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white rounded-full text-sm font-medium transition-colors"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                        </svg>
+                                        Live Demo
+                                    </a>
+                                )}
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {zoomedScreenshot && (
+                <div
+                    className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+                    onClick={() => setZoomedScreenshot(null)}
+                >
+                    <div className="absolute inset-0 bg-black/90 backdrop-blur-md" />
+                    <div
+                        className="relative max-w-5xl w-full"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            type="button"
+                            className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 text-zinc-100 flex items-center justify-center"
+                            onClick={() => setZoomedScreenshot(null)}
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <div className="relative">
+                            <img
+                                src={zoomedScreenshot}
+                                alt="Zoomed feature screen"
+                                className="w-full max-h-[80vh] object-contain rounded-2xl border border-zinc-800 bg-black"
+                            />
+                            {selectedProject?.screenshots && selectedProject.screenshots.length > 1 && (
+                                <>
+                                    <button
+                                        type="button"
+                                        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/60 hover:bg-black/80 text-zinc-100 w-10 h-10 flex items-center justify-center"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (selectedProject?.screenshots && selectedProject.screenshots.length > 0) {
+                                                const len = selectedProject.screenshots.length;
+                                                const nextIndex = (currentScreenshotIndex - 1 + len) % len;
+                                                setCurrentScreenshotIndex(nextIndex);
+                                                setZoomedScreenshot(selectedProject.screenshots[nextIndex]);
+                                            }
+                                        }}
+                                    >
+                                        ‹
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/60 hover:bg-black/80 text-zinc-100 w-10 h-10 flex items-center justify-center"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (selectedProject?.screenshots && selectedProject.screenshots.length > 0) {
+                                                const len = selectedProject.screenshots.length;
+                                                const nextIndex = (currentScreenshotIndex + 1) % len;
+                                                setCurrentScreenshotIndex(nextIndex);
+                                                setZoomedScreenshot(selectedProject.screenshots[nextIndex]);
+                                            }
+                                        }}
+                                    >
+                                        ›
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
