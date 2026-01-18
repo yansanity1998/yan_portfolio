@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
+import gsap from 'gsap';
 import Contact from './Contact';
 import SkillsSection from './Skills';
 import profileImage from '../assets/ian.png';
@@ -23,6 +24,10 @@ import medScanImage from '../assets/medscan.png';
 import scannifyImage from '../assets/scannify.png';
 import happytoesImage from '../assets/happytoes.png';
 import winterImage from '../assets/winter.png';
+import sprintxImage from '../assets/sprintx.png';
+import mcbyteImage from '../assets/mcbyte.png';
+import fruityImage1 from '../assets/fruity1.png';
+import fruityImage2 from '../assets/fruity2.png';
 import osasMainImage from '../assets/OSAS/OSAS.png';
 import osasScreenshot1 from '../assets/OSAS/Screenshot 2026-01-17 151624.png';
 import osasScreenshot2 from '../assets/OSAS/Screenshot 2026-01-17 151634.png';
@@ -41,6 +46,7 @@ interface Project {
     title: string;
     description: string;
     image: string;
+    secondaryImage?: string;
     tags: string[];
     category: string;
     liveDemo?: string;
@@ -156,6 +162,40 @@ const projects: Project[] = [
     },
     {
         id: 7,
+        title: 'SprintX',
+        description:
+            'A responsive e-commerce application for shoes with Stripe-powered payments, add-to-cart, and favorites features.',
+        image: sprintxImage,
+        tags: ['JSX', 'Supabase', 'Node.js', 'TailwindCSS'],
+        category: 'fullstack',
+        liveDemo: 'https://sprintx-nine.vercel.app/',
+        github: 'https://github.com/Jehujoshua/sprintx',
+    },
+    {
+        id: 8,
+        title: 'mcbyte-cafe',
+        description:
+            'A responsive coffee e-commerce application with add-to-cart and favorites features, focused on a smooth browsing and ordering experience.',
+        image: mcbyteImage,
+        tags: ['JSX', 'Supabase', 'Node.js', 'TailwindCSS'],
+        category: 'fullstack',
+        liveDemo: 'https://mcbyte.netlify.app/login',
+        github: 'https://github.com/charddss/mcbyte_cafe',
+    },
+    {
+        id: 9,
+        title: 'Fruity',
+        description:
+            'A responsive e-commerce application for drinks with Stripe-powered payments, add-to-cart, and favorites features.',
+        image: fruityImage1,
+        secondaryImage: fruityImage2,
+        tags: ['JSX', 'Supabase', 'Node.js', 'TailwindCSS'],
+        category: 'fullstack',
+        liveDemo: 'https://fruityfruit.netlify.app/',
+        github: 'https://github.com/Harlyn01127/fruity',
+    },
+    {
+        id: 10,
         title: 'AttendEase',
         description:
             'High-fidelity Figma prototype for an attendance system UI, showcasing clean layouts, component structure, and interaction flows.',
@@ -166,7 +206,7 @@ const projects: Project[] = [
             'https://www.figma.com/proto/RERytDlGWPNU9bvQ0rcpt4/Attendance-System?node-id=2-8&t=T5B1c0RsHwWqxeKJ-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A8&show-proto-sidebar=1',
     },
     {
-        id: 8,
+        id: 11,
         title: 'MedScan',
         description:
             'High-fidelity Figma prototype for a medical scanning application, focused on clean UI and clear patient information flows.',
@@ -183,6 +223,89 @@ const experiences = [
     { role: 'UI/UX Designer', company: 'Figma Projects', period: '2023 - Present', description: 'Creating modern, user-centered designs and prototypes using Figma.' },
     { role: 'Web Application Developer', company: 'Various Clients', period: '2023 - Present', description: 'Developing custom web applications with React, databases, and modern tech stack.' },
 ];
+
+const TiltCard = ({ children, onClick, className }: { children: ReactNode, onClick?: () => void, className?: string }) => {
+    const cardRef = useRef<HTMLDivElement>(null);
+    const glowRef = useRef<HTMLDivElement>(null);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const card = cardRef.current;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Calculate rotation based on mouse position
+        // Top-left should rotate X positive, Y negative?
+        // Let's stick to standard tilt logic:
+        // Mouse Top -> Rotate X Positive (tilt back)
+        // Mouse Bottom -> Rotate X Negative (tilt front) -> CSS rotateX is clockwise. 
+        // Actually, usually:
+        // Mouse Top -> rotateX(positive) to tip top away? No, rotateX(positive) tips top towards viewer if using right-hand rule?
+        // CSS rotateX(10deg) tips top BACK.
+
+        const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg tilt
+        const rotateY = ((x - centerX) / centerX) * 10; // Max 10 deg tilt
+
+        gsap.to(card, {
+            rotationX: rotateX,
+            rotationY: rotateY,
+            scale: 1.02,
+            duration: 0.4,
+            ease: "power2.out",
+            transformPerspective: 1000,
+            transformOrigin: "center"
+        });
+
+        // Glow effect
+        if (glowRef.current) {
+            const glowX = (x / rect.width) * 100;
+            const glowY = (y / rect.height) * 100;
+            gsap.to(glowRef.current, {
+                background: `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(255,255,255,0.15), transparent 60%)`,
+                duration: 0.2
+            });
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (!cardRef.current) return;
+
+        gsap.to(cardRef.current, {
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+            duration: 0.5,
+            ease: "power2.out",
+            clearProps: "all" // Clear transforms to avoid conflicts if needed, but keeping style is fine usually
+        });
+
+        if (glowRef.current) {
+            gsap.to(glowRef.current, {
+                background: `transparent`,
+                duration: 0.3
+            });
+        }
+    };
+
+    return (
+        <div
+            ref={cardRef}
+            className={`relative preserve-3d will-change-transform ${className}`}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            onClick={onClick}
+            style={{ transformStyle: 'preserve-3d' }}
+        >
+            {/* Glow Overlay */}
+            <div ref={glowRef} className="absolute inset-0 z-20 w-full h-full pointer-events-none rounded-2xl transition-opacity duration-300" />
+            {children}
+        </div>
+    );
+};
 
 const Content = () => {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -428,36 +551,54 @@ const Content = () => {
                     </div>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {filteredProjects.map((project, index) => (
-                            <div
-                                key={project.id}
-                                onClick={() => setSelectedProject(project)}
-                                className={`animate-on-scroll group bg-zinc-900/50 rounded-2xl border border-zinc-800 overflow-hidden hover:border-rose-500/50 transition-all hover:shadow-2xl hover:shadow-rose-500/10 cursor-pointer stagger-${(index % 3) + 1}`}
-                            >
-                                <div className="relative h-56 sm:h-64 overflow-hidden bg-black/60">
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent"></div>
-                                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                                        <span className="text-xs text-zinc-400 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full">Click to view</span>
+                            <div key={project.id} className={`animate-on-scroll stagger-${(index % 3) + 1} h-full`}>
+                                <TiltCard
+                                    onClick={() => setSelectedProject(project)}
+                                    className="group bg-zinc-900/50 rounded-2xl border border-zinc-800 overflow-hidden hover:border-rose-500/50 transition-colors hover:shadow-2xl hover:shadow-rose-500/10 cursor-pointer h-full flex flex-col"
+                                >
+                                    <div className="relative h-56 sm:h-64 overflow-hidden bg-black/60 shrink-0">
+                                        {project.secondaryImage ? (
+                                            <div className="flex w-full h-full">
+                                                <img
+                                                    src={project.image}
+                                                    alt={project.title}
+                                                    className="w-1/2 h-full object-contain transition-transform duration-700 group-hover:scale-[1.05]"
+                                                />
+                                                <img
+                                                    src={project.secondaryImage}
+                                                    alt={`${project.title} secondary`}
+                                                    className="w-1/2 h-full object-contain transition-transform duration-700 group-hover:scale-[1.05]"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <img
+                                                src={project.image}
+                                                alt={project.title}
+                                                className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.05]"
+                                            />
+                                        )}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+
+                                        {/* Floating Badge */}
+                                        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
+                                            <span className="text-xs font-semibold text-white bg-rose-500/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">View Details</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="p-6">
-                                    <h3 className="text-xl font-bold text-zinc-100 mb-2 group-hover:text-rose-400 transition-colors">{project.title}</h3>
-                                    <p className="text-zinc-400 text-sm mb-4 line-clamp-2">{project.description}</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {project.tags.map((tag) => (
-                                            <span
-                                                key={tag}
-                                                className={`px-3 py-1 text-xs font-medium rounded-full border ${getTagColor(tag)}`}
-                                            >
-                                                {tag}
-                                            </span>
-                                        ))}
+                                    <div className="p-6 flex flex-col flex-grow relative bg-zinc-900/50 backdrop-blur-sm">
+                                        <h3 className="text-xl font-bold text-zinc-100 mb-2 group-hover:text-rose-400 transition-colors">{project.title}</h3>
+                                        <p className="text-zinc-400 text-sm mb-4 line-clamp-2">{project.description}</p>
+                                        <div className="flex flex-wrap gap-2 mt-auto">
+                                            {project.tags.map((tag) => (
+                                                <span
+                                                    key={tag}
+                                                    className={`px-3 py-1 text-xs font-medium rounded-full border ${getTagColor(tag)}`}
+                                                >
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
+                                </TiltCard>
                             </div>
                         ))}
                     </div>
@@ -518,11 +659,26 @@ const Content = () => {
 
                         {/* Project Image - Full Width */}
                         <div className="relative h-72 sm:h-80 md:h-[26rem] overflow-hidden bg-black">
-                            <img
-                                src={selectedProject.image}
-                                alt={selectedProject.title}
-                                className="w-full h-full object-contain"
-                            />
+                            {selectedProject.secondaryImage ? (
+                                <div className="flex w-full h-full">
+                                    <img
+                                        src={selectedProject.image}
+                                        alt={selectedProject.title}
+                                        className="w-1/2 h-full object-contain"
+                                    />
+                                    <img
+                                        src={selectedProject.secondaryImage}
+                                        alt={`${selectedProject.title} secondary`}
+                                        className="w-1/2 h-full object-contain"
+                                    />
+                                </div>
+                            ) : (
+                                <img
+                                    src={selectedProject.image}
+                                    alt={selectedProject.title}
+                                    className="w-full h-full object-contain"
+                                />
+                            )}
                             <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/20 to-transparent"></div>
                         </div>
 
@@ -596,7 +752,7 @@ const Content = () => {
                                                 setCurrentScreenshotIndex((prev) =>
                                                     selectedProject.screenshots
                                                         ? (prev - 1 + selectedProject.screenshots.length) %
-                                                          selectedProject.screenshots.length
+                                                        selectedProject.screenshots.length
                                                         : prev,
                                                 );
                                             }}
