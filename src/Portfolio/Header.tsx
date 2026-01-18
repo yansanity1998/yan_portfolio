@@ -69,7 +69,7 @@ const Header = () => {
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled || isMobileMenuOpen
                 ? 'bg-[#0a0a0b]/95 backdrop-blur-xl shadow-2xl shadow-rose-500/5'
                 : 'bg-transparent'
                 }`}
@@ -149,20 +149,21 @@ const Header = () => {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="md:hidden relative w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-zinc-50 transition-colors"
+                        className={`md:hidden relative w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 ${isMobileMenuOpen ? 'bg-zinc-800 text-rose-500 rotate-90' : 'text-zinc-100 hover:bg-zinc-800/50 hover:text-white'
+                            }`}
                         aria-label="Toggle menu"
                     >
                         <div className="flex flex-col items-center justify-center gap-1.5">
                             <span
-                                className={`block w-6 h-0.5 bg-current transform transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
+                                className={`block w-7 h-[3px] rounded-full bg-current transform transition-all duration-300 origin-center ${isMobileMenuOpen ? 'translate-y-[9px] rotate-45' : ''
                                     }`}
                             ></span>
                             <span
-                                className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''
+                                className={`block w-7 h-[3px] rounded-full bg-current transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0 scale-0' : ''
                                     }`}
                             ></span>
                             <span
-                                className={`block w-6 h-0.5 bg-current transform transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
+                                className={`block w-7 h-[3px] rounded-full bg-current transform transition-all duration-300 origin-center ${isMobileMenuOpen ? '-translate-y-[9px] -rotate-45' : ''
                                     }`}
                             ></span>
                         </div>
@@ -186,8 +187,8 @@ const Header = () => {
                                         scrollToSection(link.href);
                                     }}
                                     className={`block px-4 py-3 text-base font-medium rounded-xl transition-all duration-300 ${isActive
-                                            ? 'text-rose-400 bg-rose-500/10 border-l-2 border-rose-500'
-                                            : 'text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800/50'
+                                        ? 'text-rose-400 bg-rose-500/10 border-l-2 border-rose-500'
+                                        : 'text-zinc-400 hover:text-zinc-50 hover:bg-zinc-800/50'
                                         }`}
                                 >
                                     {link.name}
