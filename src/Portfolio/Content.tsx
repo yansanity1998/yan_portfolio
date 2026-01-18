@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import gsap from 'gsap';
 import Contact from './Contact';
+import AboutMe from './AboutMe';
 import SkillsSection from './Skills';
 import profileImage from '../assets/ian.png';
 // Brand logos
@@ -11,11 +12,7 @@ import claudeLogo from '../assets/claude.png';
 import vscodeLogo from '../assets/vscode.png';
 import supabaseLogo from '../assets/supabase.png';
 import xamppLogo from '../assets/xampp.png';
-// Skill card icons
-import problemSolverIcon from '../assets/problem_solver.png';
-import designFocusedIcon from '../assets/design_focused.png';
-import fastLearnerIcon from '../assets/fast_learner.png';
-import teamPlayerIcon from '../assets/team_player.png';
+// Skill card icons - MOVED TO AboutMe.tsx
 // Project images
 import anxietyAppImage from '../assets/anxiety-application.png';
 import spcRfidImage from '../assets/spc-rfid.png';
@@ -218,11 +215,7 @@ const projects: Project[] = [
     },
 ];
 
-const experiences = [
-    { role: 'Full Stack Web Developer', company: 'Various Clients', period: '2023 - Present', description: 'Building responsive web applications and managing end-to-end development projects.' },
-    { role: 'UI/UX Designer', company: 'Figma Projects', period: '2023 - Present', description: 'Creating modern, user-centered designs and prototypes using Figma.' },
-    { role: 'Web Application Developer', company: 'Various Clients', period: '2023 - Present', description: 'Developing custom web applications with React, databases, and modern tech stack.' },
-];
+
 
 const TiltCard = ({ children, onClick, className }: { children: ReactNode, onClick?: () => void, className?: string }) => {
     const cardRef = useRef<HTMLDivElement>(null);
@@ -462,66 +455,7 @@ const Content = () => {
             </section>
 
             {/* About Section */}
-            <section id="about" className="py-24 sm:py-32 px-4 relative">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-rose-500/5 to-transparent"></div>
-                <div className="max-w-7xl mx-auto relative z-10">
-                    <div className="text-center mb-16 animate-on-scroll">
-                        <span className="text-rose-400 font-medium tracking-widest uppercase text-sm">About Me</span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4">Passionate About <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-400">Technology</span></h2>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="space-y-6">
-                            <p className="text-lg text-zinc-400 leading-relaxed">I'm a passionate full stack developer with over 2 years of experience building web applications. My journey started with curiosity about how websites work, and evolved into a passion for creating seamless user experiences.</p>
-                            <p className="text-lg text-zinc-400 leading-relaxed">I specialize in React, modern JavaScript frameworks, and building intuitive user interfaces. I love tackling complex problems and turning them into simple, beautiful solutions.</p>
-                            <div className="pt-6">
-                                <h3 className="text-xl font-semibold mb-4">Experience</h3>
-                                <div className="space-y-4">
-                                    {experiences.map((exp, i) => (
-                                        <div key={i} className="group relative pl-6 border-l-2 border-zinc-800 hover:border-rose-500 transition-colors">
-                                            <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-700 group-hover:border-rose-500 group-hover:bg-rose-500 transition-colors"></div>
-                                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 mb-1"><span className="font-semibold text-zinc-100">{exp.role}</span><span className="text-sm text-rose-400">@ {exp.company}</span></div>
-                                            <span className="text-sm text-zinc-500">{exp.period}</span>
-                                            <p className="text-zinc-400 mt-2">{exp.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-5">
-                            {[
-                                { icon: problemSolverIcon, title: 'Problem Solver', desc: 'Breaking down complex challenges' },
-                                { icon: designFocusedIcon, title: 'Design Focused', desc: 'Creating beautiful interfaces' },
-                                { icon: fastLearnerIcon, title: 'Fast Learner', desc: 'Always exploring new tech' },
-                                { icon: teamPlayerIcon, title: 'Team Player', desc: 'Effective collaboration' }
-                            ].map((item, i) => (
-                                <div
-                                    key={i}
-                                    className={`relative overflow-hidden p-6 rounded-2xl border border-zinc-700/50 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-rose-500/50 group cursor-pointer ${i % 2 === 1 ? 'mt-8' : ''}`}
-                                    style={{
-                                        background: 'linear-gradient(135deg, rgba(39,39,42,0.8) 0%, rgba(24,24,27,0.9) 100%)'
-                                    }}
-                                >
-                                    {/* Subtle glow effect on hover */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-rose-500/0 to-red-500/0 group-hover:from-rose-500/5 group-hover:to-red-500/5 transition-all duration-300"></div>
-
-                                    {/* Icon with glow */}
-                                    <div className="relative mb-4">
-                                        <div className="absolute inset-0 bg-rose-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                                        <img src={item.icon} alt={item.title} className="relative w-12 h-12 object-contain" />
-                                    </div>
-
-                                    {/* Content */}
-                                    <h4 className="relative font-bold text-base text-zinc-100 mb-2 group-hover:text-white transition-colors">{item.title}</h4>
-                                    <p className="relative text-sm text-zinc-400 leading-relaxed">{item.desc}</p>
-
-                                    {/* Corner accent */}
-                                    <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-rose-500/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <AboutMe />
 
             {/* Skills Section */}
             <section id="skills" className="py-24 sm:py-32 px-4">
