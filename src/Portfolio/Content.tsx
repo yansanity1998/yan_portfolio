@@ -300,6 +300,94 @@ const TiltCard = ({ children, onClick, className }: { children: ReactNode, onCli
     );
 };
 
+// Typewriter Effect Component
+const Typewriter = ({ text, speed = 100, delay = 2000 }: { text: string[], speed?: number, delay?: number }) => {
+    const [displayText, setDisplayText] = useState('');
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    useEffect(() => {
+        const currentText = text[currentIndex];
+
+        const timer = setTimeout(() => {
+            if (!isDeleting) {
+                if (displayText.length < currentText.length) {
+                    setDisplayText(currentText.slice(0, displayText.length + 1));
+                } else {
+                    setTimeout(() => setIsDeleting(true), delay);
+                }
+            } else {
+                if (displayText.length > 0) {
+                    setDisplayText(currentText.slice(0, displayText.length - 1));
+                } else {
+                    setIsDeleting(false);
+                    setCurrentIndex((prev) => (prev + 1) % text.length);
+                }
+            }
+        }, isDeleting ? speed / 2 : speed);
+
+        return () => clearTimeout(timer);
+    }, [displayText, isDeleting, currentIndex, text, speed, delay]);
+
+    return (
+        <span className="inline-block min-w-[20px]">
+            {displayText}
+            <span className="animate-pulse text-rose-500">|</span>
+        </span>
+    );
+};
+
+// 3D Tilt Container Component
+const TiltContainer = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!containerRef.current) return;
+        const card = containerRef.current;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -15;
+        const rotateY = ((x - centerX) / centerX) * 15;
+
+        gsap.to(card, {
+            rotationX: rotateX,
+            rotationY: rotateY,
+            duration: 0.3,
+            ease: 'power2.out',
+            transformPerspective: 1000,
+            transformOrigin: 'center',
+        });
+    };
+
+    const handleMouseLeave = () => {
+        if (!containerRef.current) return;
+        gsap.to(containerRef.current, {
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+            duration: 0.5,
+            ease: 'elastic.out(1, 0.5)',
+            clearProps: 'transform'
+        });
+    };
+
+    return (
+        <div
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className={`${className} transition-all duration-300`}
+            style={{ transformStyle: 'preserve-3d' }}
+        >
+            {children}
+        </div>
+    );
+};
+
 const Content = () => {
     const [activeFilter, setActiveFilter] = useState('all');
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -307,6 +395,54 @@ const Content = () => {
     const [zoomedScreenshot, setZoomedScreenshot] = useState<string | null>(null);
     const filteredProjects = activeFilter === 'all' ? projects : projects.filter(p => p.category === activeFilter);
 
+    // ... inside Content component return ...
+
+    {/* Avatar with orbiting icons */ }
+    <TiltContainer className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 cursor-pointer">
+        {/* Rotating rings - moved deeper in Z space */}
+        <div className="absolute inset-0 rounded-full border-2 border-dashed border-rose-500/20 animate-spin" style={{ animationDuration: '20s', transform: 'translateZ(-20px)' }}></div>
+        <div className="absolute inset-4 rounded-full border-2 border-dashed border-red-500/20 animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse', transform: 'translateZ(-10px)' }}></div>
+
+        {/* Glow */}
+        <div className="absolute inset-8 rounded-full bg-gradient-to-br from-rose-500/20 to-red-500/20 blur-2xl" style={{ transform: 'translateZ(0px)' }}></div>
+
+        {/* Avatar - pops out */}
+        <div
+            className="absolute inset-8 rounded-full overflow-hidden border-4 border-zinc-800 shadow-2xl transition-transform active:scale-95"
+            style={{ transform: 'translateZ(30px)' }}
+            onClick={(e) => {
+                // Click bounce/spin effect
+                gsap.fromTo(e.currentTarget,
+                    { rotation: 0, scale: 0.95 },
+                    { rotation: 360, scale: 1, duration: 0.8, ease: "back.out(1.7)" }
+                );
+            }}
+        >
+            <img src={PLACEHOLDER_AVATAR} alt="Yan" className="w-full h-full object-cover" />
+        </div>
+
+        {/* Orbiting tech icons - floating in front */}
+        <div style={{ transform: 'translateZ(50px)' }} className="absolute inset-0 pointer-events-none">
+            <OrbitingIcon duration={25} offsetPercent={0}>
+                <img src={chatgptLogo} alt="ChatGPT" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+            </OrbitingIcon>
+            <OrbitingIcon duration={25} offsetPercent={16.67}>
+                <img src={claudeLogo} alt="Claude" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+            </OrbitingIcon>
+            <OrbitingIcon duration={25} offsetPercent={33.33}>
+                <img src={figmaLogo} alt="Figma" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+            </OrbitingIcon>
+            <OrbitingIcon duration={25} offsetPercent={50}>
+                <img src={supabaseLogo} alt="Supabase" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+            </OrbitingIcon>
+            <OrbitingIcon duration={25} offsetPercent={66.67}>
+                <img src={vscodeLogo} alt="VS Code" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+            </OrbitingIcon>
+            <OrbitingIcon duration={25} offsetPercent={83.33}>
+                <img src={xamppLogo} alt="XAMPP" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+            </OrbitingIcon>
+        </div>
+    </TiltContainer>
     // Color coding for technology tags
     const getTagColor = (tag: string): string => {
         const colors: { [key: string]: string } = {
@@ -395,7 +531,9 @@ const Content = () => {
                             </div>
                             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
                                 Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-red-400 to-orange-400">Yan</span><br />
-                                <span className="text-zinc-400">Full Stack Developer</span>
+                                <span className="block text-2xl sm:text-3xl md:text-4xl font-mono text-zinc-400 mt-2 h-12">
+                                    <Typewriter text={['Full Stack Developer', 'UI/UX Designer', 'Software Engineer']} />
+                                </span>
                             </h1>
                             <p className="text-lg sm:text-xl text-zinc-400 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
                                 I craft exceptional digital experiences with clean code and modern technologies.
@@ -416,36 +554,44 @@ const Content = () => {
                             </div>
                         </div>
                         {/* Avatar with orbiting icons */}
-                        <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
-                            {/* Rotating rings */}
-                            <div className="absolute inset-0 rounded-full border-2 border-dashed border-rose-500/20 animate-spin" style={{ animationDuration: '20s' }}></div>
-                            <div className="absolute inset-4 rounded-full border-2 border-dashed border-red-500/20 animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse' }}></div>
+                        <TiltContainer className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+                            {/* Rotating rings - moved deeper in Z space */}
+                            <div className="absolute inset-0 rounded-full border-2 border-dashed border-rose-500/20 animate-spin" style={{ animationDuration: '20s', transform: 'translateZ(-20px)' }}></div>
+                            <div className="absolute inset-4 rounded-full border-2 border-dashed border-red-500/20 animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse', transform: 'translateZ(-10px)' }}></div>
+
                             {/* Glow */}
-                            <div className="absolute inset-8 rounded-full bg-gradient-to-br from-rose-500/20 to-red-500/20 blur-2xl"></div>
-                            {/* Avatar */}
-                            <div className="absolute inset-8 rounded-full overflow-hidden border-4 border-zinc-800 shadow-2xl">
+                            <div className="absolute inset-8 rounded-full bg-gradient-to-br from-rose-500/20 to-red-500/20 blur-2xl" style={{ transform: 'translateZ(0px)' }}></div>
+
+                            {/* Avatar - pops out */}
+                            <div
+                                className="absolute inset-8 rounded-full overflow-hidden border-4 border-zinc-800 shadow-2xl transition-transform"
+                                style={{ transform: 'translateZ(30px)' }}
+                            >
                                 <img src={PLACEHOLDER_AVATAR} alt="Yan" className="w-full h-full object-cover" />
                             </div>
-                            {/* Orbiting tech icons - slowly circling */}
-                            <OrbitingIcon duration={25} offsetPercent={0}>
-                                <img src={chatgptLogo} alt="ChatGPT" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
-                            </OrbitingIcon>
-                            <OrbitingIcon duration={25} offsetPercent={16.67}>
-                                <img src={claudeLogo} alt="Claude" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
-                            </OrbitingIcon>
-                            <OrbitingIcon duration={25} offsetPercent={33.33}>
-                                <img src={figmaLogo} alt="Figma" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
-                            </OrbitingIcon>
-                            <OrbitingIcon duration={25} offsetPercent={50}>
-                                <img src={supabaseLogo} alt="Supabase" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
-                            </OrbitingIcon>
-                            <OrbitingIcon duration={25} offsetPercent={66.67}>
-                                <img src={xamppLogo} alt="XAMPP" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
-                            </OrbitingIcon>
-                            <OrbitingIcon duration={25} offsetPercent={83.33}>
-                                <img src={vscodeLogo} alt="VS Code" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
-                            </OrbitingIcon>
-                        </div>
+
+                            {/* Orbiting tech icons - floating in front */}
+                            <div style={{ transform: 'translateZ(50px)' }} className="absolute inset-0 pointer-events-none">
+                                <OrbitingIcon duration={25} offsetPercent={0}>
+                                    <img src={chatgptLogo} alt="ChatGPT" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+                                </OrbitingIcon>
+                                <OrbitingIcon duration={25} offsetPercent={16.67}>
+                                    <img src={claudeLogo} alt="Claude" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+                                </OrbitingIcon>
+                                <OrbitingIcon duration={25} offsetPercent={33.33}>
+                                    <img src={figmaLogo} alt="Figma" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+                                </OrbitingIcon>
+                                <OrbitingIcon duration={25} offsetPercent={50}>
+                                    <img src={supabaseLogo} alt="Supabase" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+                                </OrbitingIcon>
+                                <OrbitingIcon duration={25} offsetPercent={66.67}>
+                                    <img src={xamppLogo} alt="XAMPP" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+                                </OrbitingIcon>
+                                <OrbitingIcon duration={25} offsetPercent={83.33}>
+                                    <img src={vscodeLogo} alt="VS Code" className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
+                                </OrbitingIcon>
+                            </div>
+                        </TiltContainer>
                     </div>
                 </div>
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 animate-bounce">
