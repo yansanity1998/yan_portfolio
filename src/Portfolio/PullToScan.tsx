@@ -64,7 +64,7 @@ const PullToScan: React.FC<PullToScanProps> = ({ onScan }) => {
 
             {/* Instruction Text */}
             <motion.div
-                className="absolute inset-0 flex items-center justify-center text-sm font-medium text-zinc-400 pointer-events-none uppercase tracking-wider"
+                className="absolute inset-0 flex items-center justify-center text-center text-sm font-medium text-zinc-400 pointer-events-none uppercase tracking-wider pl-[52px]"
                 style={{ opacity: textOpacity }}
             >
                 Pull to scan my CV
@@ -75,7 +75,7 @@ const PullToScan: React.FC<PullToScanProps> = ({ onScan }) => {
 
             {/* Sliding Text (Appears when dragging) */}
             <motion.div
-                className="absolute inset-0 flex items-center justify-center text-sm font-medium text-rose-200 pointer-events-none uppercase tracking-wider pl-4"
+                className="absolute inset-0 flex items-center justify-center text-center text-sm font-medium text-rose-200 pointer-events-none uppercase tracking-wider"
                 style={{ opacity: slideTextOpacity }}
             >
                 Release to view
