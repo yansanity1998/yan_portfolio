@@ -75,7 +75,7 @@ const Header = () => {
                 }`}
         >
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16 sm:h-20">
+                <div className="relative flex items-center justify-between h-16 sm:h-20">
                     {/* Logo */}
                     <a
                         href="#home"
@@ -88,7 +88,7 @@ const Header = () => {
                         <div className="w-10 h-10 rounded-full overflow-hidden transform group-hover:scale-110 transition-transform duration-300">
                             <img src={profileImage} alt="Yan" className="w-full h-full object-cover" />
                         </div>
-                        <span className="text-xl font-bold text-zinc-50 hidden sm:block">
+                        <span className="text-xl font-bold text-zinc-50 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 sm:static sm:transform-none">
                             Yansanity<span className="text-rose-400"></span>
                         </span>
                     </a>
