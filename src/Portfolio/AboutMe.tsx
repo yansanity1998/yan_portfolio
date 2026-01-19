@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import problemSolverIcon from '../assets/problem_solver.png';
 import designFocusedIcon from '../assets/design_focused.png';
 import fastLearnerIcon from '../assets/fast_learner.png';
 import teamPlayerIcon from '../assets/team_player.png';
 import cvImage from '../assets/cv.png';
 import cvPdf from '../CV.pdf';
+import PullToScan from './PullToScan';
 
 const experiences = [
     { role: 'Full Stack Web Developer', company: 'Various Clients', period: '2023 - Present', description: 'Building responsive web applications and managing end-to-end development projects.' },
@@ -23,7 +25,7 @@ const AboutMe = () => {
                     <span className="text-rose-400 font-medium tracking-widest uppercase text-sm">About Me</span>
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4">Passionate About <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-400">Technology</span></h2>
                 </div>
-                <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="grid md:grid-cols-2 gap-12 items-start">
                     <div className="space-y-6">
                         <p className="text-lg text-zinc-400 leading-relaxed">I'm a passionate full stack developer with over 2 years of experience building web applications. My journey started with curiosity about how websites work, and evolved into a passion for creating seamless user experiences.</p>
                         <p className="text-lg text-zinc-400 leading-relaxed">I specialize in React, modern JavaScript frameworks, and building intuitive user interfaces. I love tackling complex problems and turning them into simple, beautiful solutions.</p>
@@ -45,19 +47,12 @@ const AboutMe = () => {
                         </div>
                     </div>
                     <div className="flex flex-col gap-6">
-                        <div className="flex justify-end -mt-8 mb-2">
-                            <button
-                                onClick={() => setShowCV(true)}
-                                className="group relative inline-flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-xl transition-all duration-300 border border-zinc-700 hover:border-rose-500/50 hover:shadow-xl hover:shadow-rose-500/20 transform hover:-translate-y-1"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-rose-400 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M3 3h6v6H3V3zm2 2v2h2V5H5zm8-2h6v6h-6V3zm2 2v2h2V5h-2zM3 13h6v6H3v-6zm2 2v2h2v-2H5zm13-2h3v2h-3v-2zm-3 2h3v2h-3v-2zm3 2h3v2h-3v-2zm-3 2h3v2h-3v-2zm3 2h3v2h-3v-2zM8 8h2v2H8V8zm2 2h2v2h-2v-2zm-2 2h2v2H8v-2zm2 2h2v2h-2v-2zm-2-6h2v2H8V6zm6 0h2v2h-2V6zm2 2h2v2h-2V8zm-2 2h2v2h-2v-2z" />
-                                </svg>
-                                <span className="font-semibold text-sm">Scan my CV</span>
-
-                            </button>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div className="col-span-1">
+                                <PullToScan onScan={() => setShowCV(true)} />
+                            </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             {[
                                 { icon: problemSolverIcon, title: 'Problem Solver', desc: 'Breaking down complex challenges' },
                                 { icon: designFocusedIcon, title: 'Design Focused', desc: 'Creating beautiful interfaces' },
@@ -66,7 +61,7 @@ const AboutMe = () => {
                             ].map((item, i) => (
                                 <div
                                     key={i}
-                                    className={`relative overflow-hidden p-6 rounded-2xl border border-zinc-700/50 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-rose-500/50 group cursor-pointer ${i % 2 === 1 ? 'mt-8' : ''}`}
+                                    className={`relative overflow-hidden p-6 rounded-2xl border border-zinc-700/50 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:border-rose-500/50 group cursor-pointer ${i % 2 === 1 ? 'sm:mt-8' : ''}`}
                                     style={{
                                         background: 'linear-gradient(135deg, rgba(39,39,42,0.8) 0%, rgba(24,24,27,0.9) 100%)'
                                     }}
@@ -94,48 +89,61 @@ const AboutMe = () => {
             </div>
 
             {/* CV Modal */}
-            {showCV && (
-                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" onClick={() => setShowCV(false)}>
-                    <div className="absolute inset-0 bg-black/90 backdrop-blur-md"></div>
-                    <div
-                        className="relative bg-zinc-900 p-10 rounded-3xl border border-zinc-800 shadow-2xl max-w-lg w-full animate-fadeInUp text-center"
-                        onClick={e => e.stopPropagation()}
+            {/* CV Modal */}
+            <AnimatePresence>
+                {showCV && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+                        onClick={() => setShowCV(false)}
                     >
-                        <button
-                            onClick={() => setShowCV(false)}
-                            className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors"
+                        <div className="absolute inset-0 bg-black/40 backdrop-blur-xl"></div>
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                            transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
+                            className="relative bg-zinc-900 p-10 rounded-3xl border border-zinc-800 shadow-2xl max-w-lg w-full text-center"
+                            onClick={e => e.stopPropagation()}
                         >
-                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                        </button>
-
-                        <div className="mb-8">
-                            <h3 className="text-3xl font-bold text-white mb-2">Scan to View CV</h3>
-                            <p className="text-zinc-400 text-base">Use your phone to scan the code below</p>
-                        </div>
-
-                        <div className="bg-white p-6 rounded-2xl inline-block mb-8 relative group">
-                            <div className="absolute inset-0 bg-rose-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                            {/* CV Image / QR */}
-                            <img
-                                src={cvImage}
-                                alt="CV Scan Code"
-                                className="w-72 h-72 relative z-10 object-contain"
-                            />
-                        </div>
-
-                        <div>
-                            <a
-                                href={cvPdf}
-                                download="Jesper_Ian_CV.pdf"
-                                className="inline-flex items-center gap-3 text-rose-400 hover:text-rose-300 transition-colors font-semibold text-lg group"
+                            <button
+                                onClick={() => setShowCV(false)}
+                                className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors"
                             >
-                                <svg className="w-6 h-6 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                                <span>Download PDF Version</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            )}
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+
+                            <div className="mb-8">
+                                <h3 className="text-3xl font-bold text-white mb-2">Scan to View CV</h3>
+                                <p className="text-zinc-400 text-base">Use your phone to scan the code below</p>
+                            </div>
+
+                            <div className="bg-white p-4 rounded-2xl mx-auto mb-8 relative group w-fit flex justify-center items-center overflow-hidden">
+                                <div className="absolute inset-0 bg-rose-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                                {/* CV Image / QR */}
+                                <img
+                                    src={cvImage}
+                                    alt="CV Scan Code"
+                                    className="w-72 h-72 relative z-10 object-contain transform scale-110 -translate-x-3 translate-y-4"
+                                />
+                            </div>
+
+                            <div>
+                                <a
+                                    href={cvPdf}
+                                    download="Jesper_Ian_CV.pdf"
+                                    className="inline-flex items-center gap-3 text-rose-400 hover:text-rose-300 transition-colors font-semibold text-lg group"
+                                >
+                                    <svg className="w-6 h-6 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                    <span>Download PDF Version</span>
+                                </a>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };
