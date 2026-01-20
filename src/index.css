@@ -338,3 +338,12 @@ button {
 .animate-shimmer {
   animation: shimmer 2s infinite;
 }
+
+/* 3D Transform Utilities for TiltCard */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
