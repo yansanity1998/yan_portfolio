@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import Contact from './Contact';
 import AboutMe from './AboutMe';
@@ -631,7 +632,14 @@ const Content = () => {
                     </div>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {filteredProjects.map((project, index) => (
-                            <div key={project.id} className={`animate-on-scroll stagger-${(index % 3) + 1} h-full`}>
+                            <motion.div
+                                key={project.id}
+                                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                                viewport={{ once: false, margin: "-50px" }}
+                                transition={{ duration: 0.5, delay: (index % 3) * 0.1, type: "spring", bounce: 0.2 }}
+                                className="h-full"
+                            >
                                 <TiltCard
                                     onClick={() => setSelectedProject(project)}
                                     className="group bg-zinc-900/50 rounded-2xl border border-zinc-800 overflow-hidden hover:border-rose-500/50 transition-colors hover:shadow-2xl hover:shadow-rose-500/10 cursor-pointer h-full flex flex-col"
@@ -679,7 +687,7 @@ const Content = () => {
                                         </div>
                                     </div>
                                 </TiltCard>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>

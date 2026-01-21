@@ -1,4 +1,5 @@
 import { useMemo, useRef } from 'react';
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import figmaLogo from '../assets/figma.png';
 import chatgptLogo from '../assets/chatgpt.png';
@@ -308,6 +309,9 @@ const SkillsSection = ({ projects, activeFilter, setActiveFilter }: SkillsSectio
         return a.name.localeCompare(b.name);
     });
 
+    // Duplicate skills for seamless infinite loop
+    const duplicatedSkills = [...orderedSkills, ...orderedSkills];
+
     return (
         <>
             <div className="text-center mb-16 animate-on-scroll">
@@ -346,10 +350,28 @@ const SkillsSection = ({ projects, activeFilter, setActiveFilter }: SkillsSectio
                 ))}
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-4 sm:px-0">
-                {orderedSkills.map((skill, index) => (
-                    <SkillCard key={skill.name} skill={skill} index={index} />
-                ))}
+            {/* Infinite Horizontal Scrolling Carousel */}
+            <div className="relative overflow-hidden">
+                <motion.div
+                    className="flex gap-6"
+                    animate={{
+                        x: [0, -((orderedSkills.length * 280) + (orderedSkills.length * 24))], // card width (280px) + gap (24px)
+                    }}
+                    transition={{
+                        x: {
+                            repeat: Infinity,
+                            repeatType: "loop",
+                            duration: orderedSkills.length * 3, // 3 seconds per card
+                            ease: "linear",
+                        },
+                    }}
+                >
+                    {duplicatedSkills.map((skill, index) => (
+                        <div key={`${skill.name}-${index}`} className="flex-shrink-0 w-[280px]">
+                            <SkillCard skill={skill} index={index} />
+                        </div>
+                    ))}
+                </motion.div>
             </div>
         </>
     );
