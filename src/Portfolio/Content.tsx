@@ -26,16 +26,28 @@ import sprintxImage from '../assets/sprintx.png';
 import mcbyteImage from '../assets/mcbyte.png';
 import fruityImage1 from '../assets/fruity1.png';
 import fruityImage2 from '../assets/fruity2.png';
+import ojtHubImage1 from '../assets/ojt1.png';
+import ojtHubImage2 from '../assets/ojt.png';
+import ojtHubImage3 from '../assets/ojt2.png';
 import osasMainImage from '../assets/OSAS/OSAS.png';
-import osasScreenshot1 from '../assets/OSAS/Screenshot 2026-01-17 151624.png';
-import osasScreenshot2 from '../assets/OSAS/Screenshot 2026-01-17 151634.png';
-import osasScreenshot3 from '../assets/OSAS/Screenshot 2026-01-17 151647.png';
-import osasScreenshot4 from '../assets/OSAS/Screenshot 2026-01-17 151709.png';
-import osasScreenshot5 from '../assets/OSAS/Screenshot 2026-01-17 151718.png';
-import osasScreenshot6 from '../assets/OSAS/Screenshot 2026-01-17 151725.png';
-import osasScreenshot7 from '../assets/OSAS/Screenshot 2026-01-17 151733.png';
-import osasScreenshot8 from '../assets/OSAS/Screenshot 2026-01-17 151745.png';
-import osasScreenshot9 from '../assets/OSAS/Screenshot 2026-01-17 151752.png';
+import osasScreenshot1 from '../assets/OSAS/Screenshot 2026-01-25 085313.png';
+import osasScreenshot2 from '../assets/OSAS/Screenshot 2026-01-25 085324.png';
+import osasScreenshot3 from '../assets/OSAS/Screenshot 2026-01-25 085341.png';
+import osasScreenshot4 from '../assets/OSAS/Screenshot 2026-01-25 085350.png';
+import osasScreenshot5 from '../assets/OSAS/Screenshot 2026-01-25 085412.png';
+import osasScreenshot6 from '../assets/OSAS/Screenshot 2026-01-25 085423.png';
+import osasScreenshot7 from '../assets/OSAS/Screenshot 2026-01-25 085435.png';
+import osasScreenshot8 from '../assets/OSAS/Screenshot 2026-01-25 085442.png';
+import osasScreenshot9 from '../assets/OSAS/Screenshot 2026-01-25 085450.png';
+import osasScreenshot10 from '../assets/OSAS/Screenshot 2026-01-25 085459.png';
+import osasScreenshot11 from '../assets/OSAS/Screenshot 2026-01-25 085505.png';
+import osasScreenshot12 from '../assets/OSAS/Screenshot 2026-01-25 085515.png';
+import osasScreenshot13 from '../assets/OSAS/Screenshot 2026-01-25 085522.png';
+import osasScreenshot14 from '../assets/OSAS/Screenshot 2026-01-25 085529.png';
+import osasScreenshot15 from '../assets/OSAS/Screenshot 2026-01-25 085550.png';
+import osasScreenshot16 from '../assets/OSAS/Screenshot 2026-01-25 085557.png';
+import osasScreenshot17 from '../assets/OSAS/Screenshot 2026-01-25 085605.png';
+import osasScreenshot18 from '../assets/OSAS/Screenshot 2026-01-25 085616.png';
 
 const PLACEHOLDER_AVATAR = profileImage;
 
@@ -50,8 +62,8 @@ interface Project {
     liveDemo?: string;
     github?: string;
     screenshots?: string[];
+    headerImages?: string[];
 }
-
 
 // Orbiting icon component - icons circle slowly around the avatar (fully responsive)
 const OrbitingIcon = ({
@@ -106,7 +118,7 @@ const projects: Project[] = [
     },
     {
         id: 3,
-        title: 'DSA-OSAS Student & Sports Management System',
+        title: 'SPC-OSAS Sports & Storage Management System',
         description:
             'A merged student and sports management platform for the Office of Student Affairs & Services (OSAS). It combines a sports management system and a cabinet management system to track athletes, games, and student records in one admin panel.',
         image: osasMainImage,
@@ -123,6 +135,32 @@ const projects: Project[] = [
             osasScreenshot7,
             osasScreenshot8,
             osasScreenshot9,
+            osasScreenshot10,
+            osasScreenshot11,
+            osasScreenshot12,
+            osasScreenshot13,
+            osasScreenshot14,
+            osasScreenshot15,
+            osasScreenshot16,
+            osasScreenshot17,
+            osasScreenshot18,
+        ],
+    },
+    {
+        id: 12,
+        title: 'OJTHub',
+        description:
+            'A mobile-first OJT tracking app where students can log their daily time in/out, specify their deployment company, add notes and proof photos for daily tasks, and export DTR and daily activity reports. Progress unlocks unique achievements as hours accumulate.',
+        image: ojtHubImage1,
+        secondaryImage: ojtHubImage2,
+        tags: ['TypeScript', 'Node.js', 'Supabase', 'TailwindCSS'],
+        category: 'fullstack',
+        liveDemo: 'https://ojthub.netlify.app/',
+        github: 'https://github.com/yansanity1998/ojt-hours-tracker',
+        headerImages: [
+            ojtHubImage1,
+            ojtHubImage2,
+            ojtHubImage3,
         ],
     },
     {
@@ -635,6 +673,7 @@ const Content = () => {
                             <motion.div
                                 key={project.id}
                                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
+
                                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                                 viewport={{ once: false, margin: "-50px" }}
                                 transition={{ duration: 0.5, delay: (index % 3) * 0.1, type: "spring", bounce: 0.2 }}
@@ -645,7 +684,18 @@ const Content = () => {
                                     className="group bg-zinc-900/50 rounded-2xl border border-zinc-800 overflow-hidden hover:border-rose-500/50 transition-colors hover:shadow-2xl hover:shadow-rose-500/10 cursor-pointer h-full flex flex-col"
                                 >
                                     <div className="relative h-56 sm:h-64 overflow-hidden bg-black/60 shrink-0">
-                                        {project.secondaryImage ? (
+                                        {project.headerImages && project.headerImages.length > 0 ? (
+                                            <div className="flex w-full h-full">
+                                                {project.headerImages.slice(0, 3).map((src, idx) => (
+                                                    <img
+                                                        key={src + idx}
+                                                        src={src}
+                                                        alt={`${project.title} ${idx + 1}`}
+                                                        className="w-1/3 h-full object-contain transition-transform duration-700 group-hover:scale-[1.05]"
+                                                    />
+                                                ))}
+                                            </div>
+                                        ) : project.secondaryImage ? (
                                             <div className="flex w-full h-full">
                                                 <img
                                                     src={project.image}
@@ -665,6 +715,7 @@ const Content = () => {
                                                 className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.05]"
                                             />
                                         )}
+
                                         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
 
                                         {/* Floating Badge */}
@@ -828,7 +879,18 @@ const Content = () => {
 
                         {/* Project Image - Full Width */}
                         <div className="relative h-72 sm:h-80 md:h-[26rem] overflow-hidden bg-black">
-                            {selectedProject.secondaryImage ? (
+                            {selectedProject.headerImages && selectedProject.headerImages.length > 0 ? (
+                                <div className="flex w-full h-full">
+                                    {selectedProject.headerImages.slice(0, 3).map((src, idx) => (
+                                        <img
+                                            key={src + idx}
+                                            src={src}
+                                            alt={`${selectedProject.title} ${idx + 1}`}
+                                            className="w-1/3 h-full object-contain"
+                                        />
+                                    ))}
+                                </div>
+                            ) : selectedProject.secondaryImage ? (
                                 <div className="flex w-full h-full">
                                     <img
                                         src={selectedProject.image}
@@ -990,7 +1052,8 @@ const Content = () => {
                     className="fixed inset-0 z-[60] flex items-center justify-center p-4"
                     onClick={() => setZoomedScreenshot(null)}
                 >
-                    <div className="absolute inset-0 bg-black/90 backdrop-blur-md" />
+                    <div className="absolute inset-0 bg-zinc-900/40 backdrop-blur-lg" />
+
                     <div
                         className="relative max-w-5xl w-full"
                         onClick={(e) => e.stopPropagation()}
