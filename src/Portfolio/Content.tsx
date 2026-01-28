@@ -571,7 +571,7 @@ const Content = () => {
                             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
                                 Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-red-400 to-orange-400">Yan</span><br />
                                 <span className="block text-2xl sm:text-3xl md:text-4xl font-mono text-zinc-400 mt-2 h-12">
-                                    <Typewriter text={['Full Stack Developer', 'UI/UX Designer', 'Software Engineer']} />
+                                    <Typewriter text={['Full Stack Developer', 'UI/UX Designer', 'Creative Technologist']} />
                                 </span>
                             </h1>
                             <p className="text-lg sm:text-xl text-zinc-400 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
@@ -660,6 +660,9 @@ const Content = () => {
                     <div className="text-center mb-16 animate-on-scroll">
                         <span className="text-rose-400 font-medium tracking-widest uppercase text-sm">My Projects</span>
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4">Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-400">Work</span></h2>
+                        <p className="text-zinc-400 mt-4 max-w-2xl mx-auto">
+                            Selected portfolio projects — production apps and prototypes built with modern web technologies.
+                        </p>
                     </div>
                     <div className="flex flex-wrap justify-center gap-2 mb-12">
                         {['all', 'frontend', 'backend', 'fullstack'].map((filter) => (
