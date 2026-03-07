@@ -316,7 +316,7 @@ const SkillsSection = ({ projects, activeFilter, setActiveFilter }: SkillsSectio
         <>
             <div className="text-center mb-16 animate-on-scroll">
                 <span className="text-rose-400 font-medium tracking-widest uppercase text-sm">
-                    My Skills
+                    My Tech Stack
                 </span>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4">
                     Technologies I{' '}
@@ -325,7 +325,7 @@ const SkillsSection = ({ projects, activeFilter, setActiveFilter }: SkillsSectio
                     </span>
                 </h2>
                 <p className="text-zinc-400 mt-4 max-w-2xl mx-auto">
-                    A curated list of technologies I use to build robust and scalable applications.
+                    Frontend, backend, database, and tooling I use to build production apps.
                 </p>
             </div>
 
