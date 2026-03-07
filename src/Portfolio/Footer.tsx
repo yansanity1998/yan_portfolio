@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import profileImage from '../assets/ian.png';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+    const [showBackToTop, setShowBackToTop] = useState(false);
 
     const footerLinks = {
         navigation: [
@@ -25,6 +27,16 @@ const Footer = () => {
             element.scrollIntoView({ behavior: 'smooth' });
         }
     };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowBackToTop(window.scrollY > 80);
+        };
+
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <footer className="bg-[#0a0a0b] border-t border-zinc-800/50">
@@ -141,7 +153,7 @@ const Footer = () => {
             {/* Back to Top Button */}
             <button
                 onClick={() => scrollToSection('#home')}
-                className="fixed bottom-6 right-6 w-12 h-12 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-full shadow-lg shadow-rose-500/25 flex items-center justify-center hover:scale-110 transition-transform duration-300 z-50"
+                className={`fixed bottom-6 right-6 w-12 h-12 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-full shadow-lg shadow-rose-500/25 flex items-center justify-center z-50 transition-all duration-300 ${showBackToTop ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-2 pointer-events-none'} hover:scale-110`}
                 aria-label="Back to top"
             >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
