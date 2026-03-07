@@ -270,7 +270,18 @@ const AboutMe = () => {
                                                     </span>
                                                 </div>
                                                 <span className={`text-xs text-zinc-500 font-mono whitespace-nowrap md:group-hover:text-zinc-400 transition-colors duration-300 bg-zinc-900/50 md:group-hover:bg-zinc-800/50 px-2 py-1 rounded ${activeExperience === i ? 'text-zinc-400 bg-zinc-800/50' : ''}`}>
-                                                    {exp.period}
+                                                    {exp.period.split(/(Present)/i).map((part, partIndex) => {
+                                                        if (part.toLowerCase() !== 'present') return <React.Fragment key={partIndex}>{part}</React.Fragment>;
+
+                                                        return (
+                                                            <span
+                                                                key={partIndex}
+                                                                className={`transition-colors duration-300 ${activeExperience === i ? 'text-green-400' : ''} md:group-hover:text-green-400`}
+                                                            >
+                                                                {part}
+                                                            </span>
+                                                        );
+                                                    })}
                                                 </span>
                                             </div>
 
