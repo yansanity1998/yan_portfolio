@@ -139,8 +139,7 @@ const Footer = () => {
                 <div className="py-6 border-t border-zinc-800/50">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <p className="text-sm text-zinc-500 text-center sm:text-left">
-                            © {currentYear} Yan. All rights reserved. Built with{' '}
-                            <span className="text-rose-500">❤</span> and React.
+                            © {currentYear} Yan. All rights reserved.
                         </p>
                         <div className="flex items-center gap-6 text-sm text-zinc-500">
                             <a href="#" className="hover:text-rose-400 transition-colors">Privacy Policy</a>
