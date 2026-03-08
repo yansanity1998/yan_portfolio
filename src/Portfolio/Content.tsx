@@ -661,7 +661,7 @@ const Content = () => {
                         <span className="text-rose-400 font-medium tracking-widest uppercase text-sm">My Projects</span>
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4">Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-400">Work</span></h2>
                         <p className="text-zinc-400 mt-4 max-w-2xl mx-auto">
-                            Selected portfolio projects — production apps and prototypes built with modern web technologies.
+                            <span className="font-semibold">Selected Portfolio Projects:</span> Production apps and prototypes built with modern web technologies.
                         </p>
                     </div>
                     <div className="flex flex-wrap justify-center gap-2 mb-12">
